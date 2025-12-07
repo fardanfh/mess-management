@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Project base styles to mirror previous palette */
+:root {
+	--primary: #FFC107;
+	--brand: #1a1a1a;
+}
+
+html, body {
+	@apply font-poppins bg-gray-50 text-gray-900;
+}
+
+.sidebar {
+	/* We'll use Tailwind classes in markup, keep helper fallback */
+}
+
+.btn-primary {
+	background: linear-gradient(135deg, var(--primary) 0%, #FFD700 100%);
+	color: #000000;
+}
+
+/* small helpers for stat-cards */
+.stat-card { @apply bg-white rounded-lg shadow p-4 border-l-4 border-yellow-400; }
+.stat-card.success { border-left-color: #27ae60; }
+.stat-card.danger { border-left-color: #e74c3c; }
+.stat-card.warning { border-left-color: #FFC107; }
