@@ -24,10 +24,11 @@
                                 <i class="fas fa-credit-card"></i> Tap ID Card or Enter ID
                             </label>
                             <input type="text" class="form-control form-control-lg"
-                                   id="scan_id_card"
-                                   placeholder="Scan card here or type ID (e.g., DRV-12345)..."
-                                   autofocus
-                                   autocomplete="off">
+                                id="scan_id_card"
+                                placeholder="Scan card here or type ID (e.g., DRV-12345)..."
+                                value="{{ request('id_card') }}"
+                                autofocus
+                                autocomplete="off">
                             <small class="text-muted d-block mt-2">
                                 Auto-detect: Tekan <kbd>Enter</kbd> untuk scan
                             </small>
@@ -325,6 +326,26 @@
             lastScanTime = now;
 
             performScan();
+        }
+    });
+
+    // If page opened with ?id_card=..., auto-perform scan once
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            const idCard = params.get('id_card');
+            if (idCard) {
+                const input = document.getElementById('scan_id_card');
+                if (input) {
+                    input.value = idCard;
+                    // small delay to allow other init (rooms) to load
+                    setTimeout(() => {
+                        performScan();
+                    }, 300);
+                }
+            }
+        } catch (e) {
+            // ignore
         }
     });
 

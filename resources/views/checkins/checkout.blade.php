@@ -106,28 +106,57 @@
 <script>
     const costPerDay = 2000;
 
-    // Handle form submission - convert datetime-local format to Y-m-d H:i
-    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
-        const checkOutTimeInput = document.getElementById('checkout_time').value;
+    // Handle form submission - show SweetAlert confirm then convert datetime-local format to Y-m-d H:i and submit
+    (function() {
+        const form = document.getElementById('checkoutForm');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        if (checkOutTimeInput) {
-            // Convert from Y-m-d\TH:i to Y-m-d H:i
-            // Input format: 2025-12-07T14:30 → Output format: 2025-12-07 14:30
-            const formatted = checkOutTimeInput.replace('T', ' ');
+            // ensure Swal2 is available
+            function ensureSwal(callback) {
+                if (window.Swal) return callback();
+                const s = document.createElement('script');
+                s.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+                s.onload = callback;
+                document.head.appendChild(s);
+            }
 
-            // Create hidden input with correct format
-            const hiddenInput = document.createElement('input');
-            hiddenInput.type = 'hidden';
-            hiddenInput.name = 'checkout_time';
-            hiddenInput.value = formatted;
+            ensureSwal(function() {
+                const driverName = `{{ addslashes($checkin->driver->name) }}`;
+                const roomNumber = `{{ addslashes($checkin->room->room_number) }}`;
 
-            // Remove original datetime-local input from form data
-            document.getElementById('checkout_time').name = 'checkout_time_display';
+                Swal.fire({
+                    title: 'Confirm Checkout',
+                    html: `<p>Driver: <strong>${driverName}</strong></p><p>Room: <strong>${roomNumber}</strong></p>`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes, Process Checkout',
+                    cancelButtonText: 'Cancel'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        // Convert datetime-local to server format before submitting
+                        const checkOutTimeInput = document.getElementById('checkout_time').value;
+                        if (checkOutTimeInput) {
+                            const formatted = checkOutTimeInput.replace('T', ' ');
+                            const hiddenInput = document.createElement('input');
+                            hiddenInput.type = 'hidden';
+                            hiddenInput.name = 'checkout_time';
+                            hiddenInput.value = formatted;
 
-            // Add formatted hidden input
-            this.appendChild(hiddenInput);
-        }
-    });
+                            // Remove original datetime-local input from form data
+                            document.getElementById('checkout_time').name = 'checkout_time_display';
+
+                            // Add formatted hidden input
+                            form.appendChild(hiddenInput);
+                        }
+
+                        // Submit the form programmatically
+                        form.submit();
+                    }
+                });
+            });
+        });
+    })();
 
     document.getElementById('checkout_time').addEventListener('change', function() {
         const checkInTime = new Date('{{ $checkin->check_in_time->format('Y-m-d H:i') }}');

@@ -43,11 +43,14 @@
                             </label>
                             <div class="input-group">
                                 <input type="text" class="form-control @error('id_card') is-invalid @enderror"
-                                       id="id_card" name="id_card" value="{{ old('id_card') }}" required placeholder="DRV-XXXXX">
+                                       id="id_card" name="id_card" value="{{ old('id_card', request('id_card')) }}" required placeholder="DRV-XXXXX">
                                 <button class="btn btn-primary" type="button" id="generateIdCard">
                                     <i class="fas fa-magic"></i> Generate
                                 </button>
                             </div>
+                            @if(request('id_card'))
+                                <small class="text-success d-block mt-2"><i class="fas fa-check-circle"></i> ID Card auto-filled from NFC scan.</small>
+                            @endif
                             @error('id_card')
                                 <small class="text-danger d-block mt-2"><i class="fas fa-times-circle"></i> {{ $message }}</small>
                             @enderror
@@ -161,5 +164,23 @@ document.getElementById('generateIdCard').addEventListener('click', function() {
             button.innerHTML = originalText;
         });
 });
+</script>
+<script>
+// JS fallback: ensure id_card is filled from query string if Blade didn't
+(function() {
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const idCardParam = params.get('id_card');
+        const el = document.getElementById('id_card');
+        if (idCardParam && el && !el.value) {
+            el.value = idCardParam;
+            el.classList.add('is-valid');
+            el.focus();
+            el.select();
+        }
+    } catch (e) {
+        // ignore
+    }
+})();
 </script>
 @endsection
