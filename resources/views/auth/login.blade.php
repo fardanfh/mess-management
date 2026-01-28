@@ -30,15 +30,15 @@
         <form method="POST" action="{{ route('login') }}" id="loginForm">
             @csrf
 
-            <!-- Email Address -->
+            <!-- Username -->
             <div class="mb-4">
-                <label for="email" class="form-label fw-semibold">
-                    <i class="fas fa-envelope"></i> Email Address
+                <label for="username" class="form-label fw-semibold">
+                    <i class="fas fa-user"></i> Username
                 </label>
-                <input type="email" class="form-control form-control-lg @error('email') is-invalid @enderror"
-                       id="email" name="email" value="{{ old('email') }}"
-                       placeholder="your@email.com" required autofocus>
-                @error('email')
+                <input type="text" class="form-control form-control-lg @error('username') is-invalid @enderror"
+                       id="username" name="username" value="{{ old('username') }}"
+                       placeholder="your_username" required autofocus>
+                @error('username')
                     <div class="invalid-feedback d-block small">{{ $message }}</div>
                 @enderror
             </div>
@@ -61,13 +61,13 @@
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input" id="remember_me" name="remember">
                     <label class="form-check-label" for="remember_me">
-                        Ingat saya di perangkat ini
+                        Remember Me 
                     </label>
                 </div>
             </div>
 
             <button type="submit" class="btn btn-primary btn-lg w-100 mb-3 fw-semibold">
-                <i class="fas fa-sign-in-alt"></i> Masuk
+                <i class="fas fa-sign-in-alt"></i> Login
             </button>
         </form>
 

@@ -16,9 +16,11 @@ class CheckoutController extends Controller
     /**
      * Display a listing of checkouts.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $checkouts = Checkout::with(['driver', 'room'])->paginate(15);
+        // Show all checkouts - pagination handled by DataTables
+        $checkouts = Checkout::with(['driver', 'room', 'locker'])->get();
+        
         return view('checkouts.index', compact('checkouts'));
     }
 
@@ -32,7 +34,7 @@ class CheckoutController extends Controller
             'checkout_time' => 'required|date_format:Y-m-d H:i',
         ]);
 
-        $checkin = Checkin::with(['driver', 'room'])->findOrFail($validated['checkin_id']);
+        $checkin = Checkin::with(['driver', 'room', 'locker', 'fines'])->findOrFail($validated['checkin_id']);
 
         // Validation: driver must be checked in
         if ($checkin->status === 'checked_out') {
@@ -44,13 +46,16 @@ class CheckoutController extends Controller
 
         // Calculate nights stayed
         $nightsStayed = $this->calculateNights($checkInTime, $checkOutTime);
-        $totalCost = $nightsStayed * self::COST_PER_DAY;
+        
+        // Calculate total fines only (no room cost)
+        $totalCost = $checkin->getTotalFines();
 
         // Create checkout record
         $checkout = Checkout::create([
             'checkin_id' => $checkin->id,
             'driver_id' => $checkin->driver_id,
             'room_id' => $checkin->room_id,
+            'locker_id' => $checkin->locker_id,
             'checkout_time' => $checkOutTime,
             'nights_stayed' => $nightsStayed,
             'total_cost' => $totalCost,
@@ -65,6 +70,11 @@ class CheckoutController extends Controller
 
         // Update room status to available
         $checkin->room->update(['status' => 'tersedia']);
+
+        // Update locker status to available
+        if ($checkin->locker) {
+            $checkin->locker->updateStatus();
+        }
 
         // Create invoice
         $invoice = Invoice::create([
@@ -82,7 +92,7 @@ class CheckoutController extends Controller
             'action' => 'checkout',
             'model_type' => 'Checkout',
             'model_id' => $checkout->id,
-            'description' => "Driver {$checkin->driver->name} checked out from room {$checkin->room->room_number}. Nights: {$nightsStayed}, Cost: Rp " . number_format($totalCost),
+            'description' => "Driver {$checkin->driver->name} checked out. Nights: {$nightsStayed}, Total Fines: Rp " . number_format($totalCost),
             'ip_address' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
@@ -95,7 +105,7 @@ class CheckoutController extends Controller
      */
     public function show(Checkout $checkout)
     {
-        $checkout->load(['checkin.driver', 'checkin.room', 'invoice']);
+        $checkout->load(['checkin.driver', 'checkin.room', 'checkin.locker', 'locker', 'invoice']);
         return view('checkouts.show', compact('checkout'));
     }
 

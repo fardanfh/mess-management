@@ -14,7 +14,7 @@ class Checkout extends Model
 
     protected $table = 'checkouts';
 
-    protected $fillable = ['checkin_id', 'driver_id', 'room_id', 'checkout_time', 'nights_stayed', 'total_cost', 'payment_status', 'payment_date'];
+    protected $fillable = ['checkin_id', 'driver_id', 'room_id', 'locker_id', 'checkout_time', 'nights_stayed', 'total_cost', 'payment_status', 'payment_date'];
 
     protected $dates = ['checkout_time', 'payment_date', 'deleted_at'];
 
@@ -54,5 +54,13 @@ class Checkout extends Model
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class);
+    }
+
+    /**
+     * Get the locker for the checkout.
+     */
+    public function locker(): BelongsTo
+    {
+        return $this->belongsTo(Locker::class);
     }
 }

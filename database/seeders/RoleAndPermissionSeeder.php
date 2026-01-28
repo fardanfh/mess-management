@@ -37,6 +37,7 @@ class RoleAndPermissionSeeder extends Seeder
             ['name' => 'view_reports', 'description' => 'Lihat laporan'],
             ['name' => 'manage_payments', 'description' => 'Kelola pembayaran'],
             ['name' => 'view_activity_logs', 'description' => 'Lihat activity logs'],
+            ['name' => 'manage_roles', 'description' => 'Kelola roles dan permissions'],
         ];
 
         foreach ($permissions as $permission) {
@@ -45,11 +46,12 @@ class RoleAndPermissionSeeder extends Seeder
 
         // Attach permissions to roles
         $petugas->permissions()->attach([1, 2, 3, 4, 7]);
-        $management->permissions()->attach([5, 6, 8]);
+        $management->permissions()->attach([5, 6, 8, 9]);
 
         // Create default users
         $petugasUser = User::create([
             'name' => 'Petugas Demo',
+            'username' => 'petugas',
             'email' => 'petugas@example.com',
             'password' => bcrypt('password'),
             'role_id' => $petugas->id,
@@ -57,6 +59,7 @@ class RoleAndPermissionSeeder extends Seeder
 
         $managementUser = User::create([
             'name' => 'Management Demo',
+            'username' => 'management',
             'email' => 'management@example.com',
             'password' => bcrypt('password'),
             'role_id' => $management->id,

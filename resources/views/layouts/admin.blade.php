@@ -803,6 +803,10 @@
                 <i class="fas fa-door-open"></i>
                 <span>Rooms</span>
             </a>
+            <a href="{{ route('lockers.index') }}" class="@if (request()->routeIs('lockers.*')) active @endif">
+                <i class="fas fa-cube"></i>
+                <span>Lockers</span>
+            </a>
             <a href="{{ route('checkins.index') }}" class="@if (request()->routeIs('checkins.*')) active @endif">
                 <i class="fas fa-sign-in-alt"></i>
                 <span>Check-in</span>
@@ -811,6 +815,10 @@
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Check-out</span>
             </a>
+            
+
+            @if(auth()->check() && auth()->user()->role && auth()->user()->role->name === 'Management')
+
             <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
             <a href="{{ route('dashboard.report') }}" class="@if (request()->routeIs('dashboard.report')) active @endif">
                 <i class="fas fa-file-alt"></i>
@@ -820,6 +828,21 @@
                 <i class="fas fa-receipt"></i>
                 <span>Checkout Report</span>
             </a>
+            <a href="{{ route('driver-report.index') }}" class="@if (request()->routeIs('driver-report.*')) active @endif">
+                <i class="fas fa-file-archive"></i>
+                <span>Driver Report</span>
+            </a>
+
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 15px 0;">
+            <a href="{{ route('management.roles.index') }}" class="@if (request()->routeIs('management.roles.*')) active @endif">
+                <i class="fas fa-shield-alt"></i>
+                <span>Roles</span>
+            </a>
+            <a href="{{ route('management.permissions.index') }}" class="@if (request()->routeIs('management.permissions.*')) active @endif">
+                <i class="fas fa-lock"></i>
+                <span>Permissions</span>
+            </a>
+            @endif
         </div>
 
         <div class="sidebar-logout">

@@ -24,7 +24,8 @@
         }
 
         body {
-            background: linear-gradient(180deg, #F7F7F7 0%, #FFC107 50%, #000000 100%);
+          
+            background: linear-gradient(90deg, rgba(150, 121, 3, 1) 0%,rgba(250, 202, 6, 1) 50%,rgba(252, 223, 105, 1) 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;

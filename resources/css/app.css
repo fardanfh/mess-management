@@ -28,3 +28,71 @@ html, body {
 .stat-card.success { border-left-color: #27ae60; }
 .stat-card.danger { border-left-color: #e74c3c; }
 .stat-card.warning { border-left-color: #FFC107; }
+/* Room & Locker Selector Styling */
+.room-grid, .locker-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+}
+
+.locker-grid {
+	grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+
+.room-selector, .locker-selector {
+	position: relative;
+}
+
+.room-selector input, .locker-selector input {
+	display: none;
+}
+
+.room-box, .locker-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	border: 2px solid #dee2e6;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	background-color: #fff;
+	min-height: 100px;
+	text-align: center;
+}
+
+.locker-box {
+	min-height: 110px;
+}
+
+.room-selector input:checked ~ .room-box,
+.locker-selector input:checked ~ .locker-box {
+	border-color: #007bff;
+	background-color: #e7f3ff;
+	box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.room-selector:hover .room-box,
+.locker-selector:hover .locker-box {
+	border-color: #80bdff;
+	box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+}
+
+.room-number, .locker-number {
+	font-weight: 600;
+	font-size: 0.95rem;
+	margin-bottom: 0.5rem;
+}
+
+.room-capacity {
+	font-size: 0.75rem;
+	color: #6c757d;
+}
+
+.locker-occupancy {
+	font-size: 0.85rem;
+	margin-top: 0.5rem;
+	font-weight: 600;
+}

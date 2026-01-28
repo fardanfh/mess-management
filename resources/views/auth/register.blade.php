@@ -8,7 +8,7 @@
     <div class="mb-3">
         <i class="fas fa-user-plus fa-3x text-primary"></i>
     </div>
-    <h1 class="h3 fw-bold text-dark">Daftar Akun Baru</h1>
+    <h1 class="h3 fw-bold text-dark">Create New Account</h1>
     <p class="text-muted">Sistem Manajemen Mess</p>
 </div>
 
@@ -16,7 +16,7 @@
 <div class="card border-0 shadow-lg">
     <div class="card-body p-5">
         <h5 class="card-title text-center mb-4">
-            <i class="fas fa-clipboard-check"></i> Buat Akun
+            <i class="fas fa-clipboard-check"></i> Create Account
         </h5>
 
         <!-- Error Messages -->
@@ -25,7 +25,7 @@
                 <div class="d-flex align-items-center">
                     <i class="fas fa-exclamation-circle me-2"></i>
                     <div>
-                        <strong>Registrasi Gagal!</strong>
+                        <strong>Registration Failed!</strong>
                         @foreach ($errors->all() as $error)
                             <div class="small">{{ $error }}</div>
                         @endforeach
@@ -41,11 +41,11 @@
             <!-- Name -->
             <div class="mb-3">
                 <label for="name" class="form-label fw-semibold">
-                    <i class="fas fa-user"></i> Nama Lengkap
+                    <i class="fas fa-user"></i> Full Name
                 </label>
                 <input type="text" class="form-control form-control-lg @error('name') is-invalid @enderror"
                        id="name" name="name" value="{{ old('name') }}"
-                       placeholder="Nama Anda" required autofocus>
+                       placeholder="Your Name" required autofocus>
                 @error('name')
                     <div class="invalid-feedback d-block small">{{ $message }}</div>
                 @enderror
@@ -67,11 +67,11 @@
             <!-- Role Selection -->
             <div class="mb-3">
                 <label for="role_id" class="form-label fw-semibold">
-                    <i class="fas fa-briefcase"></i> Pilih Role
+                    <i class="fas fa-briefcase"></i> Select Role
                 </label>
                 <select class="form-select form-select-lg @error('role_id') is-invalid @enderror"
                         id="role_id" name="role_id" required>
-                    <option value="">-- Pilih Role --</option>
+                    <option value="">-- Select Role --</option>
                     @foreach($roles as $role)
                         <option value="{{ $role->id }}" @if(old('role_id') == $role->id) selected @endif>
                             {{ $role->name }}

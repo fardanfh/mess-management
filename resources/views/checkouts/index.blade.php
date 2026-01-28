@@ -14,7 +14,7 @@
     <!-- Check-outs Table -->
     <div class="card">
         <div class="card-header card-header-primary">
-            <i class="fas fa-list"></i> Check-out Records
+            <span><i class="fas fa-list"></i> Check-out Records</span>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -84,15 +84,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-
-    <!-- Pagination -->
-    <div class="row mt-4">
-        <div class="col-12">
-            <nav>
-                {{ $checkouts->links() }}
-            </nav>
         </div>
     </div>
 </div>

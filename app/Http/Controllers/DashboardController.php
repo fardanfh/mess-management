@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\Locker;
 use App\Models\Checkin;
 use App\Models\Checkout;
 use App\Models\Driver;
@@ -25,6 +26,13 @@ class DashboardController extends Controller
         $occupiedRooms = Room::where('status', 'terisi')->count();
         $maintenanceRooms = Room::where('status', 'perbaikan')->count();
         $occupancyRate = $totalRooms > 0 ? round(($occupiedRooms / $totalRooms) * 100, 1) : 0;
+
+        // Locker statistics
+        $totalLockers = Locker::count();
+        $availableLockers = Locker::where('status', 'tersedia')->count();
+        $fullLockers = Locker::where('status', 'penuh')->count();
+        $maintenanceLockers = Locker::where('status', 'perbaikan')->count();
+        $lockerOccupancyRate = $totalLockers > 0 ? round((($totalLockers - $availableLockers) / $totalLockers) * 100, 1) : 0;
 
         // Check-in/out statistics
         $todayCheckins = Checkin::whereDate('check_in_time', today())->count();
@@ -50,13 +58,13 @@ class DashboardController extends Controller
         $activeDrivers = Driver::where('status', 'active')->count();
 
         // Today's transactions
-        $todayTransactions = Checkin::with(['driver', 'room'])
+        $todayTransactions = Checkin::with(['driver', 'room', 'locker'])
             ->whereDate('check_in_time', today())
             ->latest()
             ->limit(5)
             ->get();
 
-        $todayCheckouts = Checkout::with(['driver', 'room'])
+        $todayCheckouts = Checkout::with(['driver', 'room', 'locker'])
             ->whereDate('checkout_time', today())
             ->latest()
             ->limit(5)
@@ -77,6 +85,11 @@ class DashboardController extends Controller
             'occupiedRooms',
             'maintenanceRooms',
             'occupancyRate',
+            'totalLockers',
+            'availableLockers',
+            'fullLockers',
+            'maintenanceLockers',
+            'lockerOccupancyRate',
             'todayCheckins',
             'todayCheckouts',
             'currentlyCheckedIn',

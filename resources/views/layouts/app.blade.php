@@ -22,12 +22,40 @@
             <a href="{{ route('rooms.index') }}" class="nav-link @if(request()->routeIs('rooms.*')) active @endif">
                 <i class="fas fa-door-open"></i> Rooms
             </a>
+            <a href="{{ route('lockers.index') }}" class="nav-link @if(request()->routeIs('lockers.*')) active @endif">
+                <i class="fas fa-cube"></i> Lockers
+            </a>
             <a href="{{ route('checkins.index') }}" class="nav-link @if(request()->routeIs('checkins.*')) active @endif">
                 <i class="fas fa-sign-in-alt"></i> Check-in
             </a>
             <a href="{{ route('checkouts.index') }}" class="nav-link @if(request()->routeIs('checkouts.*')) active @endif">
                 <i class="fas fa-sign-out-alt"></i> Check-out
             </a>
+
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+            <a href="{{ route('dashboard.report') }}" class="nav-link @if(request()->routeIs('dashboard.report')) active @endif">
+                <i class="fas fa-file-alt"></i> Dashboard Report
+            </a>
+            <a href="{{ route('checkouts.report') }}" class="nav-link @if(request()->routeIs('checkouts.report')) active @endif">
+                <i class="fas fa-receipt"></i> Checkout Report
+            </a>
+            <a href="{{ route('driver-report.index') }}" class="nav-link @if(request()->routeIs('driver-report.*')) active @endif">
+                <i class="fas fa-user-chart"></i> Driver Report
+            </a>
+            
+
+            @if(auth()->check() && auth()->user()->role && auth()->user()->role->name === 'Management')
+            <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
+            <span style="color: rgba(255,255,255,0.5); font-size: 0.8rem; padding-left: 10px;">MANAGEMENT</span>
+            <a href="{{ route('management.roles.index') }}" class="nav-link @if(request()->routeIs('management.roles.*')) active @endif">
+                <i class="fas fa-shield-alt"></i> Roles
+            </a>
+            <a href="{{ route('management.permissions.index') }}" class="nav-link @if(request()->routeIs('management.permissions.*')) active @endif">
+                <i class="fas fa-lock"></i> Permissions
+            </a>
+            @endif
+            
+
             <hr style="border-color: rgba(255,255,255,0.1); margin: 20px 0;">
             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf

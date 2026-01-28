@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 07, 2025 at 03:58 PM
+-- Generation Time: Dec 26, 2025 at 11:28 AM
 -- Server version: 8.0.30
 -- PHP Version: 7.4.33
 
@@ -30,13 +30,13 @@ SET time_zone = "+00:00";
 CREATE TABLE `activity_logs` (
   `id` bigint UNSIGNED NOT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `action` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `action` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `model_id` bigint UNSIGNED DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `changes` json DEFAULT NULL,
-  `ip_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `ip_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -63,7 +63,29 @@ INSERT INTO `activity_logs` (`id`, `user_id`, `action`, `model_type`, `model_id`
 (15, 1, 'checkout', 'Checkout', 4, 'Driver Fardan Faturrahman checked out from room 101. Nights: 1, Cost: Rp 2,000', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 07:29:51', '2025-12-07 07:29:51'),
 (16, 1, 'payment', 'Checkout', 4, 'Payment marked as paid for checkout #4', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 07:29:57', '2025-12-07 07:29:57'),
 (17, 1, 'checkin', 'Checkin', 5, 'Driver Fardan Faturrahman checked in to room 101', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 07:52:53', '2025-12-07 07:52:53'),
-(18, 1, 'checkin', 'Checkin', 6, 'Driver Eka Putri checked in to room 347', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 08:07:12', '2025-12-07 08:07:12');
+(18, 1, 'checkin', 'Checkin', 6, 'Driver Eka Putri checked in to room 347', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 08:07:12', '2025-12-07 08:07:12'),
+(19, 1, 'create', 'Driver', 8, 'Created driver: Test', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 19:21:32', '2025-12-07 19:21:32'),
+(20, 1, 'checkin', 'Checkin', 7, 'Driver Test checked in to room 201', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 19:23:28', '2025-12-07 19:23:28'),
+(21, 1, 'checkout', 'Checkout', 5, 'Driver Test checked out from room 201. Nights: 1, Cost: Rp 2,000', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 19:25:22', '2025-12-07 19:25:22'),
+(22, 1, 'payment', 'Checkout', 5, 'Payment marked as paid for checkout #5', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-07 19:25:32', '2025-12-07 19:25:32'),
+(23, 1, 'create', 'Driver', 9, 'Created driver: Ilham', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 01:24:34', '2025-12-08 01:24:34'),
+(24, 1, 'checkin', 'Checkin', 8, 'Driver Ilham checked in to room 102', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 01:43:02', '2025-12-08 01:43:02'),
+(25, 1, 'checkout', 'Checkout', 6, 'Driver Ilham checked out from room 102. Nights: 1, Cost: Rp 2,000', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 01:51:59', '2025-12-08 01:51:59'),
+(26, 1, 'payment', 'Checkout', 6, 'Payment marked as paid for checkout #6', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 01:52:04', '2025-12-08 01:52:04'),
+(27, 1, 'checkin', 'Checkin', 9, 'Driver Ilham checked in to room 102', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-08 01:52:50', '2025-12-08 01:52:50'),
+(28, 1, 'create', 'Driver', 10, 'Created driver: Kang Adit', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 03:15:35', '2025-12-11 03:15:35'),
+(29, 1, 'checkout', 'Checkout', 7, 'Driver Ilham checked out from room 102. Nights: 4, Cost: Rp 8,000', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 03:18:35', '2025-12-11 03:18:35'),
+(30, 1, 'payment', 'Checkout', 7, 'Payment marked as paid for checkout #7', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 03:18:40', '2025-12-11 03:18:40'),
+(31, 1, 'update', 'Driver', 10, 'Updated driver: Kang Adit', '[]', '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 03:30:18', '2025-12-11 03:30:18'),
+(32, 1, 'checkout', 'Checkout', 8, 'Driver Fardan Faturrahman checked out from room 101. Nights: 4, Cost: Rp 8,000', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 03:46:02', '2025-12-11 03:46:02'),
+(33, 1, 'delete', 'Driver', 10, 'Deleted driver: Kang Adit', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 04:22:03', '2025-12-11 04:22:03'),
+(34, 1, 'create', 'Driver', 11, 'Created driver: tes2', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 04:23:04', '2025-12-11 04:23:04'),
+(35, 1, 'checkin', 'Checkin', 10, 'Driver tes2 checked in to room 101', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 04:23:36', '2025-12-11 04:23:36'),
+(36, 1, 'checkin', 'Checkin', 11, 'Driver Ahmad Wijaya checked in to room 103', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 04:50:00', '2025-12-11 04:50:00'),
+(37, 1, 'checkout', 'Checkout', 9, 'Driver Ahmad Wijaya checked out from room 103. Nights: 1, Cost: Rp 2,000', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 04:57:31', '2025-12-11 04:57:31'),
+(38, 1, 'create', 'Driver', 12, 'Created driver: Ilham', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 05:02:47', '2025-12-11 05:02:47'),
+(39, 1, 'delete', 'Driver', 12, 'Deleted driver: Ilham', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 05:02:54', '2025-12-11 05:02:54'),
+(40, 1, 'checkin', 'Checkin', 12, 'Driver Budi Santoso checked in to room 103', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', '2025-12-11 06:44:21', '2025-12-11 06:44:21');
 
 -- --------------------------------------------------------
 
@@ -78,7 +100,7 @@ CREATE TABLE `checkins` (
   `user_id` bigint UNSIGNED NOT NULL,
   `check_in_time` datetime NOT NULL,
   `check_out_time` datetime DEFAULT NULL,
-  `status` enum('checked_in','checked_out') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'checked_in',
+  `status` enum('checked_in','checked_out') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'checked_in',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -93,8 +115,14 @@ INSERT INTO `checkins` (`id`, `driver_id`, `room_id`, `user_id`, `check_in_time`
 (2, 1, 11, 1, '2025-12-07 09:09:00', '2025-12-07 12:03:00', 'checked_out', NULL, '2025-12-07 02:09:27', '2025-12-07 05:03:53'),
 (3, 3, 15, 1, '2025-12-07 12:21:00', '2025-12-07 15:39:00', 'checked_out', NULL, '2025-12-07 05:21:51', '2025-12-07 05:36:20'),
 (4, 6, 1, 1, '2025-12-07 14:27:00', '2025-12-07 14:29:00', 'checked_out', NULL, '2025-12-07 07:27:50', '2025-12-07 07:29:51'),
-(5, 6, 1, 1, '2025-12-07 14:52:00', NULL, 'checked_in', NULL, '2025-12-07 07:52:53', '2025-12-07 07:52:53'),
-(6, 5, 16, 1, '2025-12-07 15:06:00', NULL, 'checked_in', NULL, '2025-12-07 08:07:12', '2025-12-07 08:07:12');
+(5, 6, 1, 1, '2025-12-07 14:52:00', '2025-12-11 10:45:00', 'checked_out', NULL, '2025-12-07 07:52:53', '2025-12-11 03:46:02'),
+(6, 5, 16, 1, '2025-12-07 15:06:00', NULL, 'checked_in', NULL, '2025-12-07 08:07:12', '2025-12-07 08:07:12'),
+(7, 8, 6, 1, '2025-12-08 02:22:00', '2025-12-08 02:24:00', 'checked_out', NULL, '2025-12-07 19:23:28', '2025-12-07 19:25:22'),
+(8, 9, 2, 1, '2025-12-08 08:42:00', '2025-12-08 08:51:00', 'checked_out', NULL, '2025-12-08 01:43:02', '2025-12-08 01:51:59'),
+(9, 9, 2, 1, '2025-12-08 08:52:00', '2025-12-11 10:18:00', 'checked_out', NULL, '2025-12-08 01:52:50', '2025-12-11 03:18:35'),
+(10, 11, 1, 1, '2025-12-11 11:23:00', NULL, 'checked_in', NULL, '2025-12-11 04:23:36', '2025-12-11 04:23:36'),
+(11, 2, 3, 1, '2025-12-11 11:49:00', '2025-12-11 11:57:00', 'checked_out', NULL, '2025-12-11 04:50:00', '2025-12-11 04:57:31'),
+(12, 1, 3, 1, '2025-12-11 13:44:00', NULL, 'checked_in', NULL, '2025-12-11 06:44:21', '2025-12-11 06:44:21');
 
 -- --------------------------------------------------------
 
@@ -110,7 +138,7 @@ CREATE TABLE `checkouts` (
   `checkout_time` datetime NOT NULL,
   `nights_stayed` int NOT NULL,
   `total_cost` decimal(12,2) NOT NULL,
-  `payment_status` enum('unpaid','paid') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
+  `payment_status` enum('unpaid','paid') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'unpaid',
   `payment_date` datetime DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -122,10 +150,15 @@ CREATE TABLE `checkouts` (
 --
 
 INSERT INTO `checkouts` (`id`, `checkin_id`, `driver_id`, `room_id`, `checkout_time`, `nights_stayed`, `total_cost`, `payment_status`, `payment_date`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 1, 6, 16, '2025-12-07 08:42:00', 1, 2000.00, 'paid', '2025-12-07 08:42:34', NULL, '2025-12-07 01:42:27', '2025-12-07 01:42:34'),
-(2, 2, 1, 11, '2025-12-07 12:03:00', 1, 2000.00, 'paid', '2025-12-07 12:04:07', NULL, '2025-12-07 05:03:53', '2025-12-07 05:04:07'),
-(3, 3, 3, 15, '2025-12-07 15:39:00', 1, 2000.00, 'paid', '2025-12-07 12:36:26', NULL, '2025-12-07 05:36:20', '2025-12-07 05:36:26'),
-(4, 4, 6, 1, '2025-12-07 14:29:00', 1, 2000.00, 'paid', '2025-12-07 14:29:57', NULL, '2025-12-07 07:29:51', '2025-12-07 07:29:57');
+(1, 1, 6, 16, '2025-12-07 08:42:00', 1, '2000.00', 'paid', '2025-12-07 08:42:34', NULL, '2025-12-07 01:42:27', '2025-12-07 01:42:34'),
+(2, 2, 1, 11, '2025-12-07 12:03:00', 1, '2000.00', 'paid', '2025-12-07 12:04:07', NULL, '2025-12-07 05:03:53', '2025-12-07 05:04:07'),
+(3, 3, 3, 15, '2025-12-07 15:39:00', 1, '2000.00', 'paid', '2025-12-07 12:36:26', NULL, '2025-12-07 05:36:20', '2025-12-07 05:36:26'),
+(4, 4, 6, 1, '2025-12-07 14:29:00', 1, '2000.00', 'paid', '2025-12-07 14:29:57', NULL, '2025-12-07 07:29:51', '2025-12-07 07:29:57'),
+(5, 7, 8, 6, '2025-12-08 02:24:00', 1, '2000.00', 'paid', '2025-12-08 02:25:32', NULL, '2025-12-07 19:25:22', '2025-12-07 19:25:32'),
+(6, 8, 9, 2, '2025-12-08 08:51:00', 1, '2000.00', 'paid', '2025-12-08 08:52:04', NULL, '2025-12-08 01:51:59', '2025-12-08 01:52:04'),
+(7, 9, 9, 2, '2025-12-11 10:18:00', 4, '8000.00', 'paid', '2025-12-11 10:18:40', NULL, '2025-12-11 03:18:35', '2025-12-11 03:18:40'),
+(8, 5, 6, 1, '2025-12-11 10:45:00', 4, '8000.00', 'unpaid', NULL, NULL, '2025-12-11 03:46:02', '2025-12-11 03:46:02'),
+(9, 11, 2, 3, '2025-12-11 11:57:00', 1, '2000.00', 'unpaid', NULL, NULL, '2025-12-11 04:57:31', '2025-12-11 04:57:31');
 
 -- --------------------------------------------------------
 
@@ -135,12 +168,12 @@ INSERT INTO `checkouts` (`id`, `checkin_id`, `driver_id`, `room_id`, `checkout_t
 
 CREATE TABLE `drivers` (
   `id` bigint UNSIGNED NOT NULL,
-  `id_card` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci,
-  `status` enum('active','inactive') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
+  `id_card` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` enum('active','inactive') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'active',
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -157,7 +190,11 @@ INSERT INTO `drivers` (`id`, `id_card`, `name`, `phone`, `email`, `address`, `st
 (4, 'DRV004', 'Rudi Hermawan', '08456789012', 'rudi@example.com', 'Jl. Terogong No. 321, Depok', 'active', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
 (5, 'DRV005', 'Eka Putri', '08567890123', 'eka@example.com', 'Jl. Ahmad Yani No. 654, Bekasi', 'active', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
 (6, 'DRV-33598', 'Fardan Faturrahman', '089654524264', 'fardanfhj@gmail.com', 'KP CEMPAKA RT 03 / RW 03 DESA CIMAREME KECAMATAN NGAMPRAH', 'active', NULL, '2025-12-07 01:36:38', '2025-12-07 01:36:38'),
-(7, 'DRV-33591', 'test', '089676941838', 'test@gmail.com', 'KP CEMPAKA RT 03 / RW 03 DESA CIMAREME KECAMATAN NGAMPRAH', 'active', '2025-12-07 07:12:50', '2025-12-07 07:12:46', '2025-12-07 07:12:50');
+(7, 'DRV-33591', 'test', '089676941838', 'test@gmail.com', 'KP CEMPAKA RT 03 / RW 03 DESA CIMAREME KECAMATAN NGAMPRAH', 'active', '2025-12-07 07:12:50', '2025-12-07 07:12:46', '2025-12-07 07:12:50'),
+(8, '123321', 'Test', '0384832484', 'ilham@gmail.com', 'www', 'active', NULL, '2025-12-07 19:21:32', '2025-12-07 19:21:32'),
+(9, 'F2E28DD7', 'Ilham', '089457845', 'ilham@gmail.com', 'wwww', 'active', NULL, '2025-12-08 01:24:34', '2025-12-08 01:24:34'),
+(11, '92322AB8', 'tes2', '0384832484', NULL, 'w', 'active', NULL, '2025-12-11 04:23:04', '2025-12-11 04:23:04'),
+(12, '9E8A4F56', 'Ilham', '0384832484', NULL, 'rr', 'active', '2025-12-11 05:02:54', '2025-12-11 05:02:47', '2025-12-11 05:02:54');
 
 -- --------------------------------------------------------
 
@@ -167,11 +204,11 @@ INSERT INTO `drivers` (`id`, `id_card`, `name`, `phone`, `email`, `address`, `st
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -183,15 +220,15 @@ CREATE TABLE `failed_jobs` (
 
 CREATE TABLE `invoices` (
   `id` bigint UNSIGNED NOT NULL,
-  `invoice_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `invoice_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `driver_id` bigint UNSIGNED NOT NULL,
   `checkout_id` bigint UNSIGNED DEFAULT NULL,
   `invoice_date` date NOT NULL,
   `total_amount` decimal(12,2) NOT NULL,
-  `status` enum('draft','issued','paid','overdue','cancelled') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',
+  `status` enum('draft','issued','paid','overdue','cancelled') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'draft',
   `due_date` datetime DEFAULT NULL,
   `paid_date` datetime DEFAULT NULL,
-  `notes` text COLLATE utf8mb4_unicode_ci,
+  `notes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -202,10 +239,15 @@ CREATE TABLE `invoices` (
 --
 
 INSERT INTO `invoices` (`id`, `invoice_number`, `driver_id`, `checkout_id`, `invoice_date`, `total_amount`, `status`, `due_date`, `paid_date`, `notes`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'INV-202512-00001', 6, 1, '2025-12-07', 2000.00, 'paid', '2025-12-14 08:42:27', '2025-12-07 08:42:34', NULL, NULL, '2025-12-07 01:42:27', '2025-12-07 01:42:34'),
-(2, 'INV-202512-00002', 1, 2, '2025-12-07', 2000.00, 'paid', '2025-12-14 12:03:53', '2025-12-07 12:04:07', NULL, NULL, '2025-12-07 05:03:53', '2025-12-07 05:04:07'),
-(3, 'INV-202512-00003', 3, 3, '2025-12-07', 2000.00, 'paid', '2025-12-14 12:36:20', '2025-12-07 12:36:26', NULL, NULL, '2025-12-07 05:36:20', '2025-12-07 05:36:26'),
-(4, 'INV-202512-00004', 6, 4, '2025-12-07', 2000.00, 'paid', '2025-12-14 14:29:51', '2025-12-07 14:29:57', NULL, NULL, '2025-12-07 07:29:51', '2025-12-07 07:29:57');
+(1, 'INV-202512-00001', 6, 1, '2025-12-07', '2000.00', 'paid', '2025-12-14 08:42:27', '2025-12-07 08:42:34', NULL, NULL, '2025-12-07 01:42:27', '2025-12-07 01:42:34'),
+(2, 'INV-202512-00002', 1, 2, '2025-12-07', '2000.00', 'paid', '2025-12-14 12:03:53', '2025-12-07 12:04:07', NULL, NULL, '2025-12-07 05:03:53', '2025-12-07 05:04:07'),
+(3, 'INV-202512-00003', 3, 3, '2025-12-07', '2000.00', 'paid', '2025-12-14 12:36:20', '2025-12-07 12:36:26', NULL, NULL, '2025-12-07 05:36:20', '2025-12-07 05:36:26'),
+(4, 'INV-202512-00004', 6, 4, '2025-12-07', '2000.00', 'paid', '2025-12-14 14:29:51', '2025-12-07 14:29:57', NULL, NULL, '2025-12-07 07:29:51', '2025-12-07 07:29:57'),
+(5, 'INV-202512-00005', 8, 5, '2025-12-08', '2000.00', 'paid', '2025-12-15 02:25:22', '2025-12-08 02:25:32', NULL, NULL, '2025-12-07 19:25:22', '2025-12-07 19:25:32'),
+(6, 'INV-202512-00006', 9, 6, '2025-12-08', '2000.00', 'paid', '2025-12-15 08:51:59', '2025-12-08 08:52:04', NULL, NULL, '2025-12-08 01:51:59', '2025-12-08 01:52:04'),
+(7, 'INV-202512-00007', 9, 7, '2025-12-11', '8000.00', 'paid', '2025-12-18 10:18:35', '2025-12-11 10:18:40', NULL, NULL, '2025-12-11 03:18:35', '2025-12-11 03:18:40'),
+(8, 'INV-202512-00008', 6, 8, '2025-12-11', '8000.00', 'issued', '2025-12-18 10:46:02', NULL, NULL, NULL, '2025-12-11 03:46:02', '2025-12-11 03:46:02'),
+(9, 'INV-202512-00009', 2, 9, '2025-12-11', '2000.00', 'issued', '2025-12-18 11:57:31', NULL, NULL, NULL, '2025-12-11 04:57:31', '2025-12-11 04:57:31');
 
 -- --------------------------------------------------------
 
@@ -215,7 +257,7 @@ INSERT INTO `invoices` (`id`, `invoice_number`, `driver_id`, `checkout_id`, `inv
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -246,8 +288,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -259,8 +301,8 @@ CREATE TABLE `password_resets` (
 
 CREATE TABLE `permissions` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -287,11 +329,11 @@ INSERT INTO `permissions` (`id`, `name`, `description`, `created_at`, `updated_a
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -305,8 +347,8 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `roles` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -355,10 +397,10 @@ INSERT INTO `role_permission` (`id`, `role_id`, `permission_id`, `created_at`, `
 
 CREATE TABLE `rooms` (
   `id` bigint UNSIGNED NOT NULL,
-  `room_number` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `room_number` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `capacity` int NOT NULL DEFAULT '1',
-  `status` enum('tersedia','terisi','perbaikan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'tersedia',
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `status` enum('tersedia','terisi','perbaikan') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'tersedia',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -369,12 +411,12 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`id`, `room_number`, `capacity`, `status`, `description`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, '101', 1, 'terisi', 'Single room', NULL, '2025-12-07 01:23:06', '2025-12-07 07:52:53'),
-(2, '102', 1, 'tersedia', 'Single room', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
-(3, '103', 2, 'tersedia', 'Double room', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
+(1, '101', 1, 'terisi', 'Single room', NULL, '2025-12-07 01:23:06', '2025-12-11 04:23:36'),
+(2, '102', 1, 'tersedia', 'Single room', NULL, '2025-12-07 01:23:06', '2025-12-11 03:18:35'),
+(3, '103', 2, 'terisi', 'Double room', NULL, '2025-12-07 01:23:06', '2025-12-11 06:44:21'),
 (4, '104', 2, 'terisi', 'Double room', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
 (5, '105', 1, 'perbaikan', 'Single room - maintenance', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
-(6, '201', 1, 'tersedia', 'Single room', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
+(6, '201', 1, 'tersedia', 'Single room', NULL, '2025-12-07 01:23:06', '2025-12-07 19:25:22'),
 (7, '202', 1, 'tersedia', 'Single room', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
 (8, '203', 2, 'tersedia', 'Double room', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
 (9, '204', 2, 'tersedia', 'Double room', NULL, '2025-12-07 01:23:06', '2025-12-07 01:23:06'),
@@ -394,11 +436,11 @@ INSERT INTO `rooms` (`id`, `room_number`, `capacity`, `status`, `description`, `
 
 CREATE TABLE `users` (
   `id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `role_id` bigint UNSIGNED DEFAULT NULL
@@ -529,25 +571,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `activity_logs`
 --
 ALTER TABLE `activity_logs`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `checkins`
 --
 ALTER TABLE `checkins`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `checkouts`
 --
 ALTER TABLE `checkouts`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `drivers`
 --
 ALTER TABLE `drivers`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -559,7 +601,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `invoices`
 --
 ALTER TABLE `invoices`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `migrations`

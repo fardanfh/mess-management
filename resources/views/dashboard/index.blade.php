@@ -96,12 +96,12 @@
         </div>
     </div>
 
-    <!-- Active Drivers -->
+    <!-- Available Lockers -->
     <div class="col-md-2 mb-3">
         <div class="stat-card">
-            <i class="fas fa-user-check text-primary"></i>
-            <div class="stat-value">{{ $activeDrivers }}</div>
-            <div class="stat-label">Active</div>
+            <i class="fas fa-cube text-primary"></i>
+            <div class="stat-value">{{ $availableLockers }}</div>
+            <div class="stat-label">Lockers</div>
         </div>
     </div>
 
@@ -169,7 +169,7 @@
                 <span class="badge badge-light">Real-time</span>
             </div>
             <div class="card-body d-flex justify-content-center">
-                <div style="max-width: 250px; width: 100%;">
+                <div style="max-width: 400px; width: 100%;">
                     <canvas id="occupancyChart" height="100"></canvas>
                 </div>
             </div>

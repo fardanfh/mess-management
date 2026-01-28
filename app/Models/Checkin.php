@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Checkin extends Model
@@ -14,7 +15,7 @@ class Checkin extends Model
 
     protected $table = 'checkins';
 
-    protected $fillable = ['driver_id', 'room_id', 'user_id', 'check_in_time', 'check_out_time', 'status'];
+    protected $fillable = ['driver_id', 'room_id', 'user_id', 'locker_id', 'check_in_time', 'check_out_time', 'status'];
 
     protected $dates = ['check_in_time', 'check_out_time', 'deleted_at'];
 
@@ -48,5 +49,29 @@ class Checkin extends Model
     public function checkout(): HasOne
     {
         return $this->hasOne(Checkout::class);
+    }
+
+    /**
+     * Get the locker for the checkin.
+     */
+    public function locker(): BelongsTo
+    {
+        return $this->belongsTo(Locker::class);
+    }
+
+    /**
+     * Get all fines for this checkin.
+     */
+    public function fines(): HasMany
+    {
+        return $this->hasMany(Fine::class);
+    }
+
+    /**
+     * Get total fines for this checkin.
+     */
+    public function getTotalFines(): float
+    {
+        return $this->fines()->sum('amount') ?? 0;
     }
 }

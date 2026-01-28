@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             RoleAndPermissionSeeder::class,
             DriverSeeder::class,
             RoomSeeder::class,
+            LockerSeeder::class,
         ]);
     }
 }

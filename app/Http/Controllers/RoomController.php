@@ -13,7 +13,7 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::paginate(15);
+        $rooms = Room::get();
         $statusCounts = [
             'tersedia' => Room::where('status', 'tersedia')->count(),
             'terisi' => Room::where('status', 'terisi')->count(),

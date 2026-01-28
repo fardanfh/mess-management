@@ -3,7 +3,7 @@
 @section('title', 'New Check-in')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
 
     <div class="row">
         <div class="col-md-6">
@@ -14,8 +14,8 @@
                 <div class="card-body">
                     <div class="alert alert-info mb-3">
                         <i class="fas fa-info-circle"></i>
-                        <strong>Cara Menggunakan:</strong><br>
-                        Tap ID card reader di input field dibawah, atau ketik ID card number dan tekan <kbd>Enter</kbd>
+                        <strong>How to Use:</strong><br>
+                        Tap the ID card reader in the input field below, or type the ID card number and press <kbd>Enter</kbd>
                     </div>
 
                     <form id="scanForm">
@@ -30,7 +30,7 @@
                                 autofocus
                                 autocomplete="off">
                             <small class="text-muted d-block mt-2">
-                                Auto-detect: Tekan <kbd>Enter</kbd> untuk scan
+                                Auto-detect: Press <kbd>Enter</kbd> to scan
                             </small>
                         </div>
                         <button type="button" class="btn btn-primary w-100" id="scanBtn">
@@ -138,6 +138,11 @@
                                             input.checked = false;
                                         });
                                         this.querySelector('.room-input').checked = true;
+                                        // Reset locker selection when room changes
+                                        document.getElementById('locker_id').value = '';
+                                        document.querySelectorAll('.locker-input').forEach(input => {
+                                            input.checked = false;
+                                        });
                                     });
 
                                     roomGrid.appendChild(label);
@@ -256,6 +261,201 @@
 
                             // Initialize on page load
                             document.addEventListener('DOMContentLoaded', initRoomGrid);
+                        </script>
+
+                        <div class="mb-3">
+                            <label class="form-label">Locker <span class="text-danger">*</span></label>
+
+                            <!-- Search Filter -->
+                            <div class="mb-2">
+                                <input type="text" id="lockerSearch" class="form-control form-control-sm"
+                                       placeholder="Search locker number...">
+                            </div>
+
+                            <!-- Locker Grid with Pagination -->
+                            <div id="lockerGrid" class="locker-grid">
+                                <!-- Lockers will be loaded here via JavaScript -->
+                            </div>
+
+                            <!-- Pagination Controls -->
+                            <div id="lockerPagination" class="mt-3 d-flex justify-content-center gap-1">
+                                <!-- Pagination buttons will be generated here -->
+                            </div>
+
+                            <!-- Hidden input to hold selected locker -->
+                            <input type="hidden" id="locker_id" name="locker_id" value="" required>
+
+                            @error('locker_id')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <script>
+                            // Locker data from backend
+                            const allLockers = {!! json_encode($availableLockers->toArray()) !!};
+                            let filteredLockers = [...allLockers];
+                            let currentLockerPage = 1;
+                            const lockersPerPage = 10; // Show 10 lockers per page
+
+                            // Initialize locker grid
+                            function initLockerGrid() {
+                                renderLockers();
+                                renderLockerPagination();
+                                setupLockerSearch();
+                            }
+
+                            // Render lockers for current page
+                            function renderLockers() {
+                                const lockerGrid = document.getElementById('lockerGrid');
+                                lockerGrid.innerHTML = '';
+
+                                const start = (currentLockerPage - 1) * lockersPerPage;
+                                const end = start + lockersPerPage;
+                                const lockersToShow = filteredLockers.slice(start, end);
+
+                                lockersToShow.forEach(locker => {
+                                    const label = document.createElement('label');
+                                    label.className = 'locker-selector';
+                                    const occupancy = locker.current_occupancy || 0;
+                                    const capacity = locker.capacity;
+                                    const statusClass = occupancy >= capacity ? 'danger' : 'success';
+                                    
+                                    label.innerHTML = `
+                                        <input type="radio" name="locker_selector" value="${locker.id}"
+                                               class="locker-input" data-locker="${locker.locker_number}">
+                                        <div class="locker-box">
+                                            <div class="locker-number">${locker.locker_number}</div>
+                                            <div class="locker-occupancy">
+                                                <small class="text-${statusClass === 'danger' ? 'danger' : 'success'} fw-bold">${occupancy}/${capacity}</small>
+                                            </div>
+                                        </div>
+                                    `;
+
+                                    label.addEventListener('click', function() {
+                                        document.getElementById('locker_id').value = locker.id;
+                                        // Update all radio states
+                                        document.querySelectorAll('.locker-input').forEach(input => {
+                                            input.checked = false;
+                                        });
+                                        this.querySelector('.locker-input').checked = true;
+                                    });
+
+                                    lockerGrid.appendChild(label);
+                                });
+
+                                // Show message if no lockers
+                                if (lockersToShow.length === 0) {
+                                    lockerGrid.innerHTML = '<div class="col-12 text-center text-muted py-4">No lockers available</div>';
+                                }
+                            }
+
+                            // Render locker pagination buttons
+                            function renderLockerPagination() {
+                                const pagination = document.getElementById('lockerPagination');
+                                pagination.innerHTML = '';
+
+                                const totalPages = Math.ceil(filteredLockers.length / lockersPerPage);
+
+                                if (totalPages <= 1) return;
+
+                                // Previous button
+                                if (currentLockerPage > 1) {
+                                    const prevBtn = document.createElement('button');
+                                    prevBtn.type = 'button';
+                                    prevBtn.className = 'btn btn-sm btn-outline-secondary';
+                                    prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+                                    prevBtn.onclick = () => {
+                                        currentLockerPage--;
+                                        renderLockers();
+                                        renderLockerPagination();
+                                    };
+                                    pagination.appendChild(prevBtn);
+                                }
+
+                                // Page numbers
+                                const startPage = Math.max(1, currentLockerPage - 2);
+                                const endPage = Math.min(totalPages, currentLockerPage + 2);
+
+                                if (startPage > 1) {
+                                    const firstBtn = document.createElement('button');
+                                    firstBtn.type = 'button';
+                                    firstBtn.className = 'btn btn-sm btn-outline-secondary';
+                                    firstBtn.textContent = '1';
+                                    firstBtn.onclick = () => {
+                                        currentLockerPage = 1;
+                                        renderLockers();
+                                        renderLockerPagination();
+                                    };
+                                    pagination.appendChild(firstBtn);
+
+                                    const dots = document.createElement('span');
+                                    dots.className = 'px-2';
+                                    dots.textContent = '...';
+                                    pagination.appendChild(dots);
+                                }
+
+                                for (let i = startPage; i <= endPage; i++) {
+                                    const pageBtn = document.createElement('button');
+                                    pageBtn.type = 'button';
+                                    pageBtn.className = `btn btn-sm ${i === currentLockerPage ? 'btn-primary' : 'btn-outline-secondary'}`;
+                                    pageBtn.textContent = i;
+                                    pageBtn.onclick = () => {
+                                        currentLockerPage = i;
+                                        renderLockers();
+                                        renderLockerPagination();
+                                    };
+                                    pagination.appendChild(pageBtn);
+                                }
+
+                                if (endPage < totalPages) {
+                                    const dots = document.createElement('span');
+                                    dots.className = 'px-2';
+                                    dots.textContent = '...';
+                                    pagination.appendChild(dots);
+
+                                    const lastBtn = document.createElement('button');
+                                    lastBtn.type = 'button';
+                                    lastBtn.className = 'btn btn-sm btn-outline-secondary';
+                                    lastBtn.textContent = totalPages;
+                                    lastBtn.onclick = () => {
+                                        currentLockerPage = totalPages;
+                                        renderLockers();
+                                        renderLockerPagination();
+                                    };
+                                    pagination.appendChild(lastBtn);
+                                }
+
+                                // Next button
+                                if (currentLockerPage < totalPages) {
+                                    const nextBtn = document.createElement('button');
+                                    nextBtn.type = 'button';
+                                    nextBtn.className = 'btn btn-sm btn-outline-secondary';
+                                    nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                                    nextBtn.onclick = () => {
+                                        currentLockerPage++;
+                                        renderLockers();
+                                        renderLockerPagination();
+                                    };
+                                    pagination.appendChild(nextBtn);
+                                }
+                            }
+
+                            // Setup locker search functionality
+                            function setupLockerSearch() {
+                                const searchInput = document.getElementById('lockerSearch');
+                                searchInput.addEventListener('input', function() {
+                                    const query = this.value.toLowerCase();
+                                    filteredLockers = allLockers.filter(locker =>
+                                        locker.locker_number.toLowerCase().includes(query)
+                                    );
+                                    currentLockerPage = 1;
+                                    renderLockers();
+                                    renderLockerPagination();
+                                });
+                            }
+
+                            // Initialize locker grid on page load
+                            document.addEventListener('DOMContentLoaded', initLockerGrid);
                         </script>
 
                         <div class="mb-3">
@@ -473,25 +673,33 @@
         max-height: 400px;
     }
 
-    #roomSearch {
+    .locker-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+        margin-bottom: 15px;
+        max-height: 500px;
+    }
+
+    #roomSearch, #lockerSearch {
         border-color: #e5e7eb;
         font-size: 0.875rem;
     }
 
-    #roomSearch:focus {
+    #roomSearch:focus, #lockerSearch:focus {
         border-color: #FEC905;
         box-shadow: 0 0 0 0.2rem rgba(254, 201, 5, 0.25);
     }
 
-    .room-selector {
+    .room-selector, .locker-selector {
         cursor: pointer;
     }
 
-    .room-selector input[type="radio"] {
+    .room-selector input[type="radio"], .locker-selector input[type="radio"] {
         display: none;
     }
 
-    .room-box {
+    .room-box, .locker-box {
         background: linear-gradient(135deg, #fdf2f8 0%, #fef3c7 100%);
         border: 2px solid #e5e7eb;
         border-radius: 8px;
@@ -506,13 +714,17 @@
         align-items: center;
     }
 
-    .room-box:hover {
+    .locker-box {
+        min-height: 85px;
+    }
+
+    .room-box:hover, .locker-box:hover {
         border-color: #FEC905;
         box-shadow: 0 2px 8px rgba(254, 201, 5, 0.2);
         transform: translateY(-2px);
     }
 
-    .room-number {
+    .room-number, .locker-number {
         font-weight: 700;
         font-size: 15px;
         color: #1f2937;
@@ -520,29 +732,41 @@
         line-height: 1;
     }
 
-    .room-capacity {
-        font-size: 10px;
+    .room-capacity, .locker-occupancy {
+        font-size: 11px;
         color: #6b7280;
         line-height: 1.2;
+        font-weight: 600;
     }
 
-    .room-selector input[type="radio"]:checked + .room-box {
+    .locker-occupancy {
+        color: #059669;
+    }
+
+    .locker-occupancy.danger {
+        color: #dc2626;
+    }
+
+    .room-selector input[type="radio"]:checked + .room-box,
+    .locker-selector input[type="radio"]:checked + .locker-box {
         background: linear-gradient(135deg, #FEC905 0%, #f4a801 100%);
         border-color: #FEC905;
         transform: scale(1.08);
         box-shadow: 0 4px 12px rgba(254, 201, 5, 0.35);
     }
 
-    .room-selector input[type="radio"]:checked + .room-box .room-number {
+    .room-selector input[type="radio"]:checked + .room-box .room-number,
+    .locker-selector input[type="radio"]:checked + .locker-box .locker-number {
         color: #fff;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
-    .room-selector input[type="radio"]:checked + .room-box .room-capacity {
+    .room-selector input[type="radio"]:checked + .room-box .room-capacity,
+    .locker-selector input[type="radio"]:checked + .locker-box .locker-occupancy {
         color: rgba(255, 255, 255, 0.95);
     }
 
-    #roomPagination {
+    #roomPagination, #lockerPagination {
         display: flex;
         justify-content: center;
         gap: 8px;
@@ -550,55 +774,55 @@
         margin-top: 15px;
     }
 
-    #roomPagination .btn-primary {
+    #roomPagination .btn-primary, #lockerPagination .btn-primary {
         background-color: #FEC905;
         border-color: #FEC905;
         color: #000;
         font-weight: 600;
     }
 
-    #roomPagination .btn-primary:hover {
+    #roomPagination .btn-primary:hover, #lockerPagination .btn-primary:hover {
         background-color: #f4a801;
         border-color: #f4a801;
         color: #000;
     }
 
-    #roomPagination .btn-outline-secondary {
+    #roomPagination .btn-outline-secondary, #lockerPagination .btn-outline-secondary {
         border-color: #d1d5db;
         color: #6b7280;
     }
 
-    #roomPagination .btn-outline-secondary:hover {
+    #roomPagination .btn-outline-secondary:hover, #lockerPagination .btn-outline-secondary:hover {
         border-color: #FEC905;
         background-color: #FEC905;
         color: #000;
     }
 
-    #roomPagination .px-2 {
+    #roomPagination .px-2, #lockerPagination .px-2 {
         align-self: center;
         color: #6b7280;
     }
 
     @media (max-width: 576px) {
-        .room-grid {
+        .room-grid, .locker-grid {
             grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
             gap: 8px;
         }
 
-        .room-box {
+        .room-box, .locker-box {
             padding: 8px 6px;
             min-height: 70px;
         }
 
-        .room-number {
+        .room-number, .locker-number {
             font-size: 13px;
         }
 
-        .room-capacity {
+        .room-capacity, .locker-occupancy {
             font-size: 9px;
         }
 
-        #roomSearch {
+        #roomSearch, #lockerSearch {
             font-size: 0.8rem;
         }
     }

@@ -32,6 +32,14 @@ class Room extends Model
     }
 
     /**
+     * Get the lockers for the room.
+     */
+    public function lockers(): HasMany
+    {
+        return $this->hasMany(Locker::class);
+    }
+
+    /**
      * Check if room is available
      */
     public function isAvailable()

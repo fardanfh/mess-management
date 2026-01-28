@@ -33,6 +33,20 @@
                     </p>
                 </div>
             </div>
+
+            @if ($checkin->locker)
+                <div class="card mt-4">
+                    <div class="card-header card-header-primary">
+                        <i class="fas fa-cube"></i> Locker
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            <strong>Locker Number:</strong><br>
+                            <span style="font-size: 20px">{{ $checkin->locker->locker_number }}</span>
+                        </p>
+                    </div>
+                </div>
+            @endif
         </div>
 
         <div class="col-md-8">
@@ -65,27 +79,41 @@
                             </div>
                         </div>
 
-                        <!-- Cost Calculation Preview -->
+                        <!-- Duration Display -->
                         <div class="row mb-4">
                             <div class="col-12">
-                                <div id="costSummary" class="alert alert-warning d-none">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <strong>Nights Stayed:</strong>
-                                            <h5 id="nightsStayed">-</h5>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <strong>Cost per Night:</strong>
-                                            <h5>Rp 2.000</h5>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <strong>Total Cost:</strong>
-                                            <h5 id="totalCost">-</h5>
-                                        </div>
-                                    </div>
+                                <div id="durationSummary" class="alert alert-info d-none">
+                                    <strong>Nights Stayed:</strong>
+                                    <h5 id="nightsStayed">-</h5>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Fines Summary -->
+                        @if ($checkin->fines->count() > 0)
+                            <div class="card mb-4">
+                                <div class="card-header card-header-warning">
+                                    <i class="fas fa-ban"></i> Total Fines (Denda)
+                                </div>
+                                <div class="card-body">
+                                    @foreach ($checkin->fines as $fine)
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>{{ $fine->getTypeLabel() }}</span>
+                                            <span class="fw-bold">Rp {{ number_format($fine->amount, 0, ',', '.') }}</span>
+                                        </div>
+                                    @endforeach
+                                    <hr>
+                                    <div class="d-flex justify-content-between">
+                                        <h5><strong>Total Fines:</strong></h5>
+                                        <h5 class="text-danger"><strong>Rp {{ number_format($checkin->getTotalFines(), 0, ',', '.') }}</strong></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="alert alert-success mb-4">
+                                <i class="fas fa-check-circle"></i> <strong>Tidak ada denda</strong> - Total Bayar: <strong>Rp 0</strong>
+                            </div>
+                        @endif
 
                         <div class="d-flex gap-2">
                             <button type="submit" class="btn btn-danger">
@@ -104,8 +132,6 @@
 
 @push('js')
 <script>
-    const costPerDay = 2000;
-
     // Handle form submission - show SweetAlert confirm then convert datetime-local format to Y-m-d H:i and submit
     (function() {
         const form = document.getElementById('checkoutForm');
@@ -167,11 +193,9 @@
         const diffMs = checkOutTime - checkInTime;
         const diffHours = diffMs / (1000 * 60 * 60);
         const nights = Math.ceil(diffHours / 24);
-        const totalCost = nights * costPerDay;
 
         document.getElementById('nightsStayed').textContent = nights + ' night(s)';
-        document.getElementById('totalCost').textContent = 'Rp ' + totalCost.toLocaleString('id-ID');
-        document.getElementById('costSummary').classList.remove('d-none');
+        document.getElementById('durationSummary').classList.remove('d-none');
     });
 
     // Trigger calculation on page load

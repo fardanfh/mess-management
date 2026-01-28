@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'role_id',
@@ -65,5 +66,13 @@ class User extends Authenticatable
     public function hasRole($roleName)
     {
         return $this->role && $this->role->name === $roleName;
+    }
+
+    /**
+     * Get all fines added by this user.
+     */
+    public function addedFines()
+    {
+        return $this->hasMany(Fine::class, 'added_by', 'id');
     }
 }
